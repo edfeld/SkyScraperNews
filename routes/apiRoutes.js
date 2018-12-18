@@ -1,5 +1,6 @@
 var axios = require("axios");
 var cheerio = require("cheerio");
+var mongoose = require("mongoose");
 
 module.exports = function(app, db) {
     // console.log("db: ", db);
@@ -93,5 +94,27 @@ module.exports = function(app, db) {
             //     });
 
         });
+    });
+
+    // post route for saving a Comment to the db and associating it with an Article
+    app.post("/comment", function (req, res) {
+        console.log("req.body.articleId: ", req.body.articleId);
+        // Create a new comment
+        db.Comment.create({ 
+            author: req.body.author, 
+            comment: req.body.comment
+        })
+            .then(function(dbComments) {
+               // If a new Comment is created successfully, find one Article and push the new Comment's _id to the Article's `comments` array
+               return db.Article.findOneAndUpdate({ _id: req.body.articleId }, { $push: { 
+                   comments: dbComments._id } }, { new: true });
+            })
+            .then(function(dbComments) {
+                res.json(dbComments);
+            })
+            .catch(function(err) {
+                res.json(err);
+            });
+
     });
 }
