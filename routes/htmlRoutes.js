@@ -15,15 +15,13 @@ module.exports = function(app) {
   // Load comments page and pass in an Article by id
   app.get("/comments/:id", function(req, res) {
     console.log("my Id: +++++++++", req.params.id); 
-    db.Article.find({ 
-        where: { id: mongoose.Types.ObjectId(req.params.id) } })
+    db.Article.find({ _id: mongoose.Types.ObjectId(req.params.id) })
         .populate("comments")
         .then(function(dbComments) {
-        res.json(dbComments);
-    //   res.render("comments", {
-    //     articleId: req.params.id,
-    //     comments: dbComments
-    //   });
+        // res.json(dbComments);
+        // console.log("{ commentsObj: dbComments }: ===>", { commentsObj: dbComments })
+        console.log("{ commentsObj: dbComments[0]}:", { commentsObj: dbComments[0]})
+      res.render("comments", { commentsObj: dbComments[0] });
     })
     .catch(function(err) {
     // If an error occurs, send it back to the client

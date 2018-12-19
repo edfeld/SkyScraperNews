@@ -15,10 +15,11 @@ var API = {
       });
     },
     getComments: function(id) {
-      return $.ajax({
-        url: "comments/" + id,
-        type: "GET"
-      });
+        console.log("Get comments <<<< id == ", id);
+        return $.ajax({
+            url: "comments/" + id,
+            type: "GET"
+        });
     },
     deleteExample: function(id) {
       return $.ajax({
@@ -29,9 +30,12 @@ var API = {
   };
 
 var handleListCommentsBtnClick = function() {
-    let me = 0;
-    console.log("===> handleList - This: ", this);
+    let articleId = $(this)
+        .parent()
+        .attr("data-id");
+    console.log("===> handleList - articleId: ", articleId);
     // ToDo:  create the call to the comments html route
+    API.getComments(articleId);
     
 }
 

@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+
+  </div>
+  <div class="row">
+    <div class="col-8 offset-2">
+      <div class="card mt-4">
+        <div class="card-body">
+          <h5 class="card-title"> Comments</h5>
+          <ul id="article-list" class="list-group">
+            
+              {{#each commentsObj.comments}}
+                <li class="list-group-item"><span><b>Author:</b></span> {{this.author}}
+                  <br>{{this.comment}}
+                </li>
+              {{/each}}
+          </ul>
+              <button class="btn btn-danger float-right comments">Add a Comments</button>
+          <a href="/">← Back To Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

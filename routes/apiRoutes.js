@@ -31,21 +31,6 @@ module.exports = function(app, db) {
             // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
             var $ = cheerio.load(response.data);
             var intCount = 0;
-            // $(".card__headline").each(function (i, element) {
-            //   intCount++
-            //   // console.log(element);
-            //   var link = "https://www.huffingtonpost.com" + $(element).children("a.card__link").attr("href");
-            //   // console.log(link);
-            //   var title = $(element).children().text();
-            //   // console.log("$(element.children().text():", $(element).children().text());
-            //   var summary = $(element).next("div.card__description").text();
-    
-            //   results.push({
-            //     title: title.trim(),
-            //     summary: summary,
-            //     link: link
-            //   });
-            // });
             $(".card__headlines").each(function (i, element) {
                 intCount++
                 // console.log(element);
@@ -98,7 +83,7 @@ module.exports = function(app, db) {
 
     // post route for saving a Comment to the db and associating it with an Article
     app.post("/comment", function (req, res) {
-        console.log("req.body.articleId: ", req.body.articleId);
+        // console.log("req.body.articleId: ", req.body.articleId);
         // Create a new comment
         db.Comment.create({ 
             author: req.body.author, 
@@ -106,7 +91,7 @@ module.exports = function(app, db) {
         })
             .then(function(dbComments) {
                // If a new Comment is created successfully, find one Article and push the new Comment's _id to the Article's `comments` array
-               return db.Article.findOneAndUpdate({ _id: req.body.articleId }, { $push: { 
+               return db.Article.findOneAndUpdate({ _id: mongoose.Types.ObjectId(req.body.articleId) }, { $push: { 
                    comments: dbComments._id } }, { new: true });
             })
             .then(function(dbComments) {
@@ -116,5 +101,19 @@ module.exports = function(app, db) {
                 res.json(err);
             });
 
+    });
+
+    // find and return 1 artice in json
+    app.get("/article/:articleId", function (req, res) {
+        // query for with the articleId
+        // console.log("articleId: ", req.params.articleId)
+        db.Article.find({_id: mongoose.Types.ObjectId(req.params.articleId)})
+        .then(function (dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            // if an error occurs, send it back to the client
+            res.json(err);
+        });
     });
 }

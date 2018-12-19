@@ -14,14 +14,18 @@
             </p>
           </div>
       </div>
-        </form>
         <h3>Articles:</h3>
         <ul id="article-list" class="list-group">
           {{#each articles}}
           <li data-id="{{this._id}}" class="list-group-item">
             {{!-- <a href="example/{{this.id}}">{{this.text}}</a> --}}
-            <a href="{{this.link}}">{{this.title}}</a>
+            <h4>
+              <a href="{{this.link}}">{{this.title}}</a>
+            </h4>
             <button class="btn btn-danger float-right comments">Comments</button>
+            <p data-id="{{this._id}}">
+              {{#if this.summary}}<a href="{{this.link}}">{{this.summary}}</a>{{else}}[No Summary]{{/if}}
+            </p>
           </li>
           {{/each}}
         </ul>
