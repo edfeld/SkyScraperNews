@@ -114,8 +114,8 @@ app.set("view engine", "handlebars");
   
   /* -/-/-/-/-/-/-/-/-/-/-/-/- */
 
-  // Listen on port 3000
-  app.listen(3000, function () {
+  // Listen on port 3000 or whatever Heroku chooses
+  app.listen(PORT, function () {
     console.log("App running on port 3000! http://localhost:3000");
   });
 
