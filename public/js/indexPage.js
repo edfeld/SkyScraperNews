@@ -1,80 +1,66 @@
 // index.js
 
-$commentsList = $("#article-list");
-$articlesDelete = $("#delete-articles");
+let $commentsList = $("#article-list");
+let $articlesDelete = $("div#nav-delete-articles");
+let $articlesScrap = $("li div#nav-scrape-huff")
+
+console.log("$articlesDelete: ======> :", $articlesDelete);
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-    // saveComments: function(example) {
-    //   return $.ajax({
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     type: "POST",
-    //     url: "api/examples",
-    //     data: JSON.stringify(example)
-    //   });
-    // },
-    // get all comments related to one article
-    getComments: function(id) {
-        console.log("Get comments <<<< id == ", id);
-        return $.ajax({
-            url: "comments/" + id,
-            type: "GET"
-        });
-    },
-    deleteArticles: function(id) {
-      return $.ajax({
-        url: "/api/articles/",
-        type: "DELETE"
-      });
-    }
-  };
+  scrapeArticles: function() {
+    console.log("running function, scrapeArticles <<<<<<>>>>>>>>>>");
+    $.ajax("/api/huffScrape", {
+      type: "GET"
+    }).then(function() {
+      console.log("scrape new articles");
+      location.reload();
+    });
+  },
+  getComments: function(id) {
+    console.log("Get comments <<<< id == ", id);
+    return $.ajax({
+      url: "comments/" + id,
+      type: "GET"
+    });
+  },
+  deleteArticles: function() {
+    return $.ajax({
+      url: "/api/articles/",
+      type: "DELETE"
+    });
+  }
+};
+
+var handleScrapeArticleBtnClick = function() {
+  console.log("scaping new articles in handleScrapeArticleBtnClick");
+  API.scrapeArticles();
+};
 
 var handleListCommentsBtnClick = function() {
-    let articleId = $(this)
-        .parent()
-        .attr("data-id");
-    console.log("===> handleList - articleId: ", articleId);
-    // ToDo:  create the call to the comments html route
-    API.getComments(articleId);
-    
-}
+  let articleId = $(this)
+    .parent()
+    .attr("data-id");
+  console.log("===> handleList - articleId: ", articleId);
+  // ToDo:  create the call to the comments html route
+  API.getComments(articleId);
+};
+
+console.log("$articleDelete: =============  ========> ", $articlesDelete);
 
 // Fn() to handle deleting all Articles
 var handleDeleteArticlesBtnClick = function(event) {
   event.preventDefault();
-  console.log("starting fn() handleListCommentsBtnClick {{{{{{{{{{{");
-  API.deleteArticles(articleId);
-  
-}
+  console.log("starting fn() handleDeleteArticlesBtnClick {{{{{{{{{{{");
+  // alert("hello!");
+  if (confirm("Are you sure you want to save this thing into the database?")) {
+    // Delete all Articles!
+    API.deleteArticles();
+  } else {
+    // Do nothing!
+  }
+};
 
-$commentsList.on("click", ".comments", handleListCommentsBtnClick);
-// $articlesDelete.on("click", ".articles", handleDeleteArticlesBtnClick);
-
-// $("#delete-articles").on("click", function(event) {
-//   event.preventDefault();
-//   console.log("++++++++==============> Clicked the delete Article function");
-// });
-
-// $(".change-devoured").on("click", function (event) {
-//   var id = $(this).data("id");
-//   console.log("id: ", id);
-//   var isDevoured = $(this).data("newstate");
-//   console.log("isDevoured: ", isDevoured);
-//   var newState = {
-//     devoured: isDevoured
-//   };
-
-//   // Send the PUT request.  It's an update call
-//   $.ajax("/api/burgers/" + id, {
-//     type: "PUT",
-//     data: newState
-//   }).then(
-//     function () {
-//       console.log("changed devoured to", newState);
-//       // Reload the page to get the updated list
-//       location.reload();
-//     }
-//   );
-// });
+$commentsList.on("click", handleListCommentsBtnClick);
+$articlesDelete.on("click", handleDeleteArticlesBtnClick);
+$articlesScrap.on("click", handleScrapeArticleBtnClick);

@@ -19,7 +19,7 @@ module.exports = function (app, db) {
     // An empty array to save the data that we'll scrape
     var results = [];
 
-    app.get("/huffScrape", function (req, res) {
+    app.get("/api/huffScrape", function (req, res) {
         // 
         // axios.get("https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1311.R1.TR12.TRC2.A0.H1.Xchain.TRS0&_nkw=chainsaw&_sacat=0")
         API.getHuff()
@@ -53,7 +53,7 @@ module.exports = function (app, db) {
                 results.forEach(function (element) {
                     db.Article.create(element).then(function (newElement) {
                             arrNewHeadLines.push(newElement);
-                            console.log("newElelment=====>>>>>>>>, ", newElement);
+                            // console.log("newElelment=====>>>>>>>>, ", newElement);
                             // res.json(newElement);
                         })
                         .catch(function (err) {
@@ -144,15 +144,15 @@ module.exports = function (app, db) {
 
     // Delete all articles and all comments
     app.delete('/api/articles', function (req, res) {
-        db.Comment.deleteMany({})
+        db.Article.deleteMany({})
             .then(function (dbArticles) {
                 db.Comment.deleteMany({})
                     .then(function (dbArticles) {
                         console.log("All Comments Removed!!");
                         res.json(dbArticles);
                     })
-                    .catch(function () {
-                        res.json("error text: ", err);
+                    .catch(function (err) {
+                        res.status("error text: ", err);
                     })
             })
             .then(function (dbArticles) {
