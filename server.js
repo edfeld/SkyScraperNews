@@ -24,6 +24,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
   // Initialize Express
   var app = express();
+  
 // Use morgan logger for logging requests
   app.use(logger("dev"));
   // Parse request body as JSON
@@ -59,7 +60,7 @@ app.set("view engine", "handlebars");
 
   // Routes
   require("./routes/apiRoutes")(app, db);
-  require("./routes/htmlRoutes")(app);
+  require("./routes/htmlRoutes")(app, db);
 
   // Route 2
   // =======

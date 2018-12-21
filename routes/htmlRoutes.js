@@ -1,7 +1,7 @@
-var db = require("../models");
+// var db = require("../models");
 var mongoose = require("mongoose");
 
-module.exports = function(app) {
+module.exports = function(app, db) {
   // Load index page
   app.get("/", function(req, res) {
     //   console.log("======> *******  hitting Index.handlebars")
@@ -20,14 +20,17 @@ module.exports = function(app) {
         .then(function(dbComments) {
         // res.json(dbComments);
         // console.log("{ commentsObj: dbComments }: ===>", { commentsObj: dbComments })
-        console.log("{ commentsObj: dbComments[0]}:", { commentsObj: dbComments[0]})
-      res.render("comments", { commentsObj: dbComments[0] });
+        console.log("{ commentsObj: dbComments[0]}=========:>", { commentsObj: dbComments[0]})
+        // res.send("hello comments");
+      return res.render("comments", { commentsObj: dbComments[0] });
     })
     .catch(function(err) {
     // If an error occurs, send it back to the client
     res.json(err);
     });
   });
+
+
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {

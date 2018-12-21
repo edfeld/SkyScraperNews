@@ -1,38 +1,23 @@
-<div id="home">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="text-center scrape-header mt-1">
-          <div class="containter">
-            <p class="text-white lead">&nbsp;</p>
-            <h1 class="bg-info mb-0">Mongo News Scraper</h1>
-            <p class="lead text-white bg-dark">Huffington Post Edition</p>
-            <hr class="my-2">
-            <!-- <p>More info</p> -->
-            <p class="lead">
-                <!-- <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Jumbo action name</a> -->
-            </p>
-          </div>
-      </div>
-        <h3>Articles:</h3>
+
+        <h3 class="article-header">Articles:</h3>
+        <button class="btn btn-danger float-right" id="delete-articles">
+		            Delete All Articles
+	            </button>
         <ul id="article-list" class="list-group">
           {{#each articles}}
           <li data-id="{{this._id}}" class="list-group-item">
             {{!-- <a href="example/{{this.id}}">{{this.text}}</a> --}}
             <h4>
-              <a href="{{this.link}}">{{this.title}}</a>
+              <a href="{{this.link}}" target=”_blank”>{{this.title}}</a>
             </h4>
-            <button class="btn btn-danger float-right comments">Comments</button>
+            <a href="comments/{{this._id}}" class="btn btn-danger float-right comment" role="button">Open Comments</a>
+            {{!-- <button class="btn btn-danger float-right comments">Comments</button> --}}
             <p data-id="{{this._id}}">
-              {{#if this.summary}}<a href="{{this.link}}">{{this.summary}}</a>{{else}}[No Summary]{{/if}}
+              {{#if this.summary}}<a href="{{this.link}}" target=”_blank”>{{this.summary}}</a>{{else}}[No Summary]{{/if}}
             </p>
           </li>
           {{/each}}
         </ul>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/indexPage.js"></script>

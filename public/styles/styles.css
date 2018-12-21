@@ -2,3 +2,8 @@
     background-image: url("../img/NewsPaperClip1.png");
     /* opacity: 1.5; */
 }
+
+.article-header {
+    display: inline-block;
+    width: 200px;
+}
