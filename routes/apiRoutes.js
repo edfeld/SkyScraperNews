@@ -117,9 +117,9 @@ module.exports = function (app, db) {
                 })
             })
             .then(function (dbComments) {
-                console.log("comment Removed!!");
-                res.json(dbComments);
-                // res.status("Comment Rsemoved!")
+                console.log("//////////////// comment Removed!! \\\\\\\\\\\\\\\\");
+                res.send('/');
+                // res.status("Comment Removed!")
             })
             .catch(function (err) {
                 res.json(err);
@@ -157,8 +157,8 @@ module.exports = function (app, db) {
             })
             .then(function (dbArticles) {
                 console.log("All Article Removed!!");
-                res.json(dbArticles);
-                // res.status("Comment Rsemoved!")
+                res.send('done');
+                // res.status("Comment Removed!")
             })
             .catch(function (err) {
                 res.json(err);

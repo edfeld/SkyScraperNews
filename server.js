@@ -64,54 +64,10 @@ app.set("view engine", "handlebars");
   require("./routes/apiRoutes")(app, db);
   require("./routes/htmlRoutes")(app, db);
 
-  // Route 2
-  // =======
-  // When you visit this route, the server will
-  // scrape data from the site of your choice, and save it to
-  // MongoDB.
-  // TIP: Think back to how you pushed website data
-  // into an empty array in the last class. How do you
-  // push it into a MongoDB collection instead?
-  // app.get("/getMongoEbay", function() {
-  //   API.getEbay()
-  //   .then(function (response) {
-      
-  //     // Load the HTML into cheerio and save it to a variable
-  //     // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-  //     var $ = cheerio.load(response.data);
-      
-  //     $("a.s-item__link").each(function (i, element) {
-  //       // console.log(element);
-  //       var link = $(element).attr("href");
-  //       // console.log(link);
-  //       var title = $(element).children("h3.s-item__title").text();
-  //       // console.log("-=--==--=> title: ", title);
-  //       db.scrapedData.insert({
-  //         title: title,
-  //         link: link
-  //       });
-  //     });
-  //     // res.json(results);
-  //   });
-  // });
-
-  // This route gets the scraped data from the Mongo Database
-  // app.get("/api/scrapeEbay", function(req, res){
-  //   db.scrapedData.find({}, function(err, results){
-  //     if (err) throw err;
-  //     // console.log("ebay data: ", results);
-  //     res.json(results);
-
-  //   });
-  // });
-
-
-  app.get("/index", function(req, res){
+  app.get("/indexOne", function(req, res){
     res.redirect("/index.html");
   })
 
-
-  
   /* -/-/-/-/-/-/-/-/-/-/-/-/- */
 
   // Listen on port 3000 or whatever Heroku chooses

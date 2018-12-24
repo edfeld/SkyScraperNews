@@ -2,9 +2,12 @@
 
 let $commentsList = $("#article-list");
 let $articlesDelete = $("div#nav-delete-articles");
-let $articlesScrap = $("li div#nav-scrape-huff")
+let $articlesScrap = $("li div#nav-scrape-huff");
+let $deleteArticles = $("button#delete-articles");
+
 
 console.log("$articlesDelete: ======> :", $articlesDelete);
+console.log("$deleteArticles: ======> :", $deleteArticles);
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -25,9 +28,13 @@ var API = {
     });
   },
   deleteArticles: function() {
-    return $.ajax({
+      console.log("+++++++++++++++==============+++++++++++++++> delete Articles")
+      return $.ajax({
       url: "/api/articles/",
       type: "DELETE"
+    }).then(function() {
+      console.log("scrape new articles");
+      location.reload();
     });
   }
 };
@@ -63,4 +70,5 @@ var handleDeleteArticlesBtnClick = function(event) {
 
 $commentsList.on("click", handleListCommentsBtnClick);
 $articlesDelete.on("click", handleDeleteArticlesBtnClick);
+$deleteArticles.on("click", handleDeleteArticlesBtnClick);
 $articlesScrap.on("click", handleScrapeArticleBtnClick);
